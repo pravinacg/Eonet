@@ -1,0 +1,133 @@
+
+
+
+<div class="container" style="margin-top: 70px;">
+  <div style="background-color: #eee;height:auto!important;">
+    <br>
+    <div class="col-sm-8" >
+      <span>Name :</span>
+        <input [(ngModel)]="this.SearchValue" type='text' placeholder="EONET_4560" class="form-control" />
+    </div>
+    <br>
+    <div class="col-sm-8">Category :<select class="form-control" [(ngModel)]="selectedCategory">
+      <option class="form-control" *ngFor="let c of categoriLst" [ngValue]="c">{{c.title}}</option>
+    </select>
+    <button class="btn btn-info" (click)="searchEvent()"> Search Event    </button>
+  </div>
+  <br>
+    <div class="col-sm-8">
+      <span>Status :</span>
+      <select [(ngModel)]="this.selectedStatus" class="form-control">
+        <option value="Open">Open</option>
+        <option value="Closed">Closed</option>
+    </select>
+  <br>
+    <div>
+      <span>Start Date <input [(ngModel)]="this.startDate" type='text' placeholder="2019-01-01" class="form-control" /></span>
+      <span>End Date   <input [(ngModel)]="this.EndDate" type='text' placeholder="2019-01-31" class="form-control" /></span>
+      <span><button class="btn btn-info" (click)="searchEventbyDate()"> Search Event By Date    </button></span>
+    </div>
+     <span></span>
+    </div>
+    
+  
+       
+    
+    <br>
+  </div>
+  <div>
+    <table class=" table sortable">
+      <thead>
+        <tr>
+          <th sortable-column="id">id</th>
+            
+            <th sortable-column="title">Event Name</th>
+
+            <th sortable-column="description">description</th>
+            <th sortable-column="link">link</th>
+            <th sortable-column="Catagory" (click)="sort('Catagory')"><b></b> <i class="fa fa-fw fa-sort"></i>Catagory</th>
+            <th sortable-column="sources">sources</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of eonetevents; let i = index">
+          <td>{{event.id}}</td>
+          <td>{{event.title}}</td>
+          <td>{{event.description}}</td>
+          <td>{{event.link}}</td>
+          <td>{{event.categories[0].title}}</td>
+          <td>
+            <button type="button" (click)="onSelect(event)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#eventModal">Event Details</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+   
+
+    <div class="card text-center" *ngIf="open">
+        <div class="card-header">
+          
+        </div>
+        <div class="card-block">
+          <h4 class="card-title">sample event</h4>
+          <p class="card-text">
+            description
+          </p>    
+        </div>
+  
+      </div>
+  </div>
+  
+  <app-event-detail [event]="selectedEvent"></app-event-detail>
+ 
+  <!-- Modal -->
+  <div *ngIf="selectedEvent" id="eventModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Event Details</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+       </div>
+        <div class="modal-body">
+          <p class="card-text">
+            {{selectedEvent.title}}
+          </p> 
+          <p class="card-text">
+            {{selectedEvent.description}}
+          </p>
+          <p class="card-text">
+            {{selectedEvent.title}}
+          </p>
+          <p class="card-text">
+            {{selectedEvent.link}}
+          </p>
+        
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th sortable-column="id">id</th>
+                    <th sortable-column="title">Event Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cat of eventCatgory; let i = index">
+                  <td>{{cat.id}}</td>
+                  <td>{{cat.title}}</td>
+                  
+                </tr>
+              </tbody>
+            </table>
+                    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+</div>
+
