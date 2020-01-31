@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+  }
+  
+  th[sortable-column] {
+    text-align: left;
+    cursor: pointer;
+  }
+
+  table,th,td{
+    border: 1px solid grey;
+    padding:5px;
+}
